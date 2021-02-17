@@ -1,0 +1,50 @@
+package com.example.hello_world;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RadioButton;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
+
+public class FirstFragment extends Fragment {
+
+    @Override
+    public View onCreateView(
+            LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState
+    ) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_first, container, false);
+    }
+
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        RadioButton option1 = view.findViewById(R.id.radioButton1);
+        RadioButton option2 = view.findViewById(R.id.radioButton2);
+        RadioButton option3 = view.findViewById(R.id.radioButton3);
+        RadioButton option4 = view.findViewById(R.id.radioButton4);
+        TextView incorrect = view.findViewById(R.id.incorrect);
+        TextView unchecked = view.findViewById(R.id.unchecked);
+        view.findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(option4.isChecked()) {
+                    NavHostFragment.findNavController(FirstFragment.this)
+                            .navigate(R.id.action_FirstFragment_to_SecondFragment);
+                } else if(option1.isChecked() || option2.isChecked() || option3.isChecked()){
+                    incorrect.setVisibility(View.VISIBLE);
+                    unchecked.setVisibility(View.INVISIBLE);
+                }else{
+                    incorrect.setVisibility(View.INVISIBLE);
+                    unchecked.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
+}
